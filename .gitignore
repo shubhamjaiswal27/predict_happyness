@@ -2,3 +2,4 @@ data/train.csv
 data/test.csv
 venv
 *.pyc
+*.pickle
