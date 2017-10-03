@@ -2,6 +2,28 @@ from config.Config import Config
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import pickle
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+import re
+
+
+stops = set(stopwords.words("english"))
+def cleanData(text, lowercase = False, remove_stops = False, stemming = False):
+	txt = str(text)
+	txt = re.sub(r'[^A-Za-z0-9\s]',r'',txt)
+	txt = re.sub(r'\n',r' ',txt)
+	
+	if lowercase:
+		txt = " ".join([w.lower() for w in txt.split()])
+		
+	if remove_stops:
+		txt = " ".join([w for w in txt.split() if w not in stops])
+	
+	if stemming:
+		st = PorterStemmer()
+		txt = " ".join([st.stem(w) for w in txt.split()])
+
+	return txt
 
 
 def save(fileName, objectToSave):
@@ -32,9 +54,14 @@ def seperate_positive_negative_case_df(data,key, pos_val, neg_val):
 
 
 
-def get_training_and_testing_df():
+def get_training_and_testing_df(clean=False):
 	# reads csv and loads it in memory as dataframe
 	data_set = read_csv_to_df(Config.TrainingDataFile)
+
+	# clean data
+	if clean:
+		print("Cleaning data ...")
+		data_set['Description'] = data_set['Description'].map(lambda x: cleanData(x, lowercase=True, remove_stops=True, stemming=True))
 
 	# splits dataframe of data set into train and test set
 	train_set, test_set = get_train_test_set_df(data_set)

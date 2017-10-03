@@ -18,9 +18,9 @@ def save_classfier(name, classifier):
 	print("Saving classifier ...")
 	save(classifierFileName, classifier)
 
-def main():
+def train():
 	# fetching training data
-	train_set, test_set = get_training_and_testing_df()
+	train_set, test_set = get_training_and_testing_df(clean=True)
 	reviews_train, labels_train = get_training_data(train_set)
 
 	pos, neg = get_pos_neg(test_set)
@@ -28,8 +28,6 @@ def main():
 	neg_label = ['not happy'] * len(neg)
 
 	print("Test Cases :\n\tNo. of positive examples : {0}, No. of negative examples : {1}".format(len(pos), len(neg)))
-
-
 
 	# Tf-Idf Vectors for features
 	vectorizer = TfidfVectorizer(max_df=0.5, stop_words='english')
@@ -41,6 +39,9 @@ def main():
 
 	print("Saving vectorizer ...")
 	save(vectorizerFileName, vectorizer)
+
+	# deleting unnecessary variables
+	del train_set, test_set, pos, neg, reviews_train
 
 	# feature selection 
 	print("Selecting {0} features".format(Config.NumberOfFeatures))
@@ -58,7 +59,7 @@ def main():
 	X_pos = X_pos.todense()
 	X_neg = X_neg.todense()
 
-	classifierList = [('LinearSVC', LinearSVC()), ('MLPClassifier', MLPClassifier(solver='adam',hidden_layer_sizes=(300,),activation='relu')), ('RidgeClassifier', RidgeClassifier()),('Perceptron',Perceptron())]
+	classifierList = [('LinearSVC', LinearSVC()), ('Perceptron',Perceptron()), ('SGDClassifier',SGDClassifier())]
 
 	for name, classifier in classifierList:
 		print("Training {0} classifier ...".format(name))
@@ -83,4 +84,4 @@ def main():
 
 
 if __name__ == '__main__':
-	main()
+	train()

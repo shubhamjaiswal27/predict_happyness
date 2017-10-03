@@ -10,5 +10,5 @@ class Config:
 	TrainingDataFile = "train.csv"
 	TestingDataFile = "test.csv"
 
-	NumberOfFeatures = 1000
+	NumberOfFeatures = 1500
 	
