@@ -3,3 +3,4 @@ data/test.csv
 venv
 *.pyc
 *.pickle
+output/*.csv
