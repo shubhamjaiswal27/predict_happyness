@@ -16,7 +16,7 @@ class Config:
 	CleanData = True
 
 class Clasify:
-	ModelFileName = Config.ModelPath + "voteClassifier_v" + Config.VersionCode + ".pickle"
+	ModelFileName = Config.ModelPath + "LinearSVC_v" + Config.VersionCode + ".pickle"
 	FeatureFileName = Config.FeaturePath + "ch2_v" + Config.VersionCode + ".pickle"
 	VectorizerFileName = Config.VectorizerPath + "TfidfVectorizer_v" + Config.VersionCode + ".pickle"
 	
