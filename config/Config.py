@@ -11,4 +11,6 @@ class Config:
 	TestingDataFile = "test.csv"
 
 	NumberOfFeatures = 1500
+
+	CleanData = True
 	

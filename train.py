@@ -20,7 +20,7 @@ def save_classfier(name, classifier):
 
 def train():
 	# fetching training data
-	train_set, test_set = get_training_and_testing_df(clean=True)
+	train_set, test_set = get_training_and_testing_df(clean=Config.CleanData)
 	reviews_train, labels_train = get_training_data(train_set)
 
 	pos, neg = get_pos_neg(test_set)
